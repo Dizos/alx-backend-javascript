@@ -1,51 +1,78 @@
-interface DirectorInterface {
-  workFromHome(): string;
-  getCoffeeBreak(): string;
-  workDirectorTasks(): string;
+interface Teacher {
+  readonly firstName: string;
+  readonly lastName: string;
+  fullTimeEmployee: boolean;
+  yearsOfExperience?: number;
+  location: string;
+  [key: string]: any; // Allow arbitrary attributes
 }
 
-interface TeacherInterface {
-  workFromHome(): string;
-  getCoffeeBreak(): string;
-  workTeacherTasks(): string;
+interface Directors extends Teacher {
+  numberOfReports: number;
 }
 
-class Director implements DirectorInterface {
-  workFromHome(): string {
-    return "Working from home";
+// Interface for printTeacher function
+interface printTeacherFunction {
+  (firstName: string, lastName: string): string;
+}
+
+// printTeacher function
+const printTeacher: printTeacherFunction = (firstName: string, lastName: string): string => {
+  return `${firstName.charAt(0)}. ${lastName}`;
+};
+
+// Interface for StudentClass constructor
+interface StudentClassConstructor {
+  new (firstName: string, lastName: string): StudentClassInterface;
+}
+
+// Interface for StudentClass
+interface StudentClassInterface {
+  firstName: string;
+  lastName: string;
+  workOnHomework(): string;
+  displayName(): string;
+}
+
+// StudentClass implementation
+class StudentClass implements StudentClassInterface {
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
-  getCoffeeBreak(): string {
-    return "Getting a coffee break";
+  workOnHomework(): string {
+    return "Currently working";
   }
 
-  workDirectorTasks(): string {
-    return "Getting to director tasks";
+  displayName(): string {
+    return this.firstName;
   }
 }
 
-class Teacher implements TeacherInterface {
-  workFromHome(): string {
-    return "Cannot work from home";
-  }
+// Create teacher3 with the specified attributes
+const teacher3: Teacher = {
+  firstName: "John",
+  fullTimeEmployee: false,
+  lastName: "Doe",
+  location: "London",
+  contract: false,
+};
 
-  getCoffeeBreak(): string {
-    return "Cannot have a break";
-  }
+// Log teacher3 to the console
+console.log(teacher3);
 
-  workTeacherTasks(): string {
-    return "Getting to work";
-  }
-}
+// Create director1 with the specified attributes
+const director1: Directors = {
+  firstName: "John",
+  lastName: "Doe",
+  location: "London",
+  fullTimeEmployee: true,
+  numberOfReports: 17,
+};
 
-function createEmployee(salary: number | string): Director | Teacher {
-  if (typeof salary === "number" && salary < 500) {
-    return new Teacher();
-  }
-  return new Director();
-}
-
-// Test createEmployee
-console.log(createEmployee(200));
-console.log(createEmployee(1000));
-console.log(createEmployee('$500'));
+// Log director1 to the console
+console.log(director1);
