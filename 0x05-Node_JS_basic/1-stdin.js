@@ -1,21 +1,24 @@
-const readline = require('readline');
+const { stdin } = process;
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
+// Display welcome message
 console.log('Welcome to ALX, what is your name?');
 
-let nameGiven = false;
+// Set encoding to read input as strings
+stdin.setEncoding('utf8');
 
-rl.on('line', (line) => {
-  if (!nameGiven) {
-    console.log(`Your name is: ${line}`);
-    nameGiven = true;
-  }
+// Handle input data
+stdin.on('data', (input) => {
+  // Trim whitespace and newlines
+  const name = input.trim();
+  // Display the name
+  console.log(`Your name is: ${name}`);
+  // Close the program
+  console.log('This important software is now closing');
+  // Exit the process
+  process.exit();
 });
 
-rl.on('close', () => {
+// Handle end of input (e.g., when piped input finishes)
+stdin.on('end', () => {
   console.log('This important software is now closing');
 });
